@@ -1,0 +1,13 @@
+Dependencies installed:
+express
+bcryptjs - to encrypt password
+passport - for authentication
+passport-local - strategy to use with passport
+ejs - template engine
+express-ejs-layouts
+mongoose- 
+connect-flash
+express-session
+
+Registering and signing up using passport: Nodejs with Passport 
+https://www.youtube.com/watch?v=6FOq4cUdH8k
