@@ -17,6 +17,8 @@
           <i class="fas fa-sign-in-alt"></i> Login
         </h1>
 
+        <!-- Shows validation errors -->
+        <% include ./partials/messages %>
         <form action="/users/login" method="POST">
           <div class="form-group">
             <label for="email">Email</label>
