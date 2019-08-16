@@ -1,28 +1,60 @@
-const express = require("express");
+const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const mongoose= require('mongoose');
-const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer')
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash = require('connect-flash');
+const session = require('express-session');
 
 const app = express();
 
-//ejs //to embed js code in html
+// Passport Config
+require('./config/passport')(passport);
+
+// DB Config
+const db = require('./config/keys').mongoURI;
+
+// Connect to Mongo
+// 'mongodb://localhost:27017/test'
+mongoose
+  .connect(db, { useNewUrlParser: true })
+  .then(() => console.log('MongoDB Connected...'))
+  .catch(err => console.log('Error:', err));
+
+// EJS middleware
 app.use(expressLayouts);
-app.set('view engine','ejs');
+app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// Express Session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
+);
 
-//routes
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect flash
+app.use(flash());
+
+// Global Vars
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
+
+// Bodyparser
+app.use(express.urlencoded({ extended: false }));
+
+// Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
+const PORT = process.env.PORT || 4433;
 
-app.use('/contact',require('./routes/contact'));
-
-
-const port = process.env.port || 5001;
-//starts server 
-app.listen(port, ()=>{
-    console.log(`Server started at ${port}`); 
-}); 
+app.listen(PORT, console.log(`Server started on port ${PORT}`));
