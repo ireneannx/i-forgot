@@ -18,20 +18,20 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-//render contact form
+// render contact form
 router.get('/', (req, res) => {
     res.render("contactform")
 })
 
-//posts message to email
+// posts message to email
 router.post("/", (req, res) => {
 
     transporter.sendMail({
         from: '"Irene Inc" <cohortdths@gmail.com>', // sender address
-        to: "irenephantrash@gmail.com", // list of receivers
-        subject: "Contact form details ", // Subject line
-        text: "Hello world?", // plain text body
-        html: `<b>${req.body.message}</b>` // html body
+        to: "irenephantrash@gmail.com",             // list of receivers
+        subject: "Contact form details ",           // Subject line
+        text: "Hello world?",                       // plain text body
+        html: `<b>${req.body.message}</b>`          // html body
     }).then((info) => {
         console.log("Message sent: %s", info.messageId);
     }).catch(() => {
