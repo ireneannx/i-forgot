@@ -1,38 +1,131 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
+const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
 
-//login
-router.get('/login', (req, res) => {
-    res.render("login");
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'cohortdths@gmail.com',
+    pass: 'classof2019'
+  }
+});
 
-})
-//register
-router.get('/register', (req, res) => {
-    res.render("register");
+// User model
+const User = require('../models/User');
 
-})
-// contact
-// router.get('/contact', (req, res) => {
-//     res.render("contactform")
-// })
+// Login Page
+router.get('/login', (req, res) => res.render('login'));
 
-//post contact
-// router.post("/contact", (req, res) => {
+// Register Page
+router.get('/register', (req, res) => res.render('register.ejs'));
 
-//     transporter.sendMail({
-//         from: '"Irene Inc" <me@ireneann.com>', // sender address
-//         to: "irenephantrash@gmail.com", // list of receivers
-//         subject: "Contact form details ", // Subject line
-//         text: "Hello world?", // plain text body
-//         html: `<b>${req.body.message}</b>` // html body
-//     }).then((info) => {
-//         console.log("Message sent: %s", info.messageId);
-//     }).catch(() => {
-//         console.log("something went wrong.")
-//     })
+// Register Handle
+router.post('/register', (req, res) => {
+  // pull variables out
+  const { name, email, password, password2 } = req.body;
+  let errors = [];
 
+  // Check required fields
+  if (!name || !email || !password || !password2) {
+    errors.push({ msg: 'Please fill in all fields' });
+  }
 
-//     res.redirect("/success");
-// });
+  // Check passwords match
+  if (password !== password2) {
+    errors.push({ msg: 'Passwords do not match' });
+  }
+
+  // Check password length
+  if (password.length < 6) {
+    errors.push({ msg: 'Password should be at least 6 characters' });
+  }
+
+  if (errors.length > 0) {
+    res.render('register', {
+      // Same as error: error
+      errors,
+      name,
+      email,
+      password,
+      password2
+    });
+  } else {
+    // Validation Passed
+    User.findOne({ email: email }).then(user => {
+      if (user) {
+        // User exists
+        errors.push({ msg: 'Email is already registered' });
+        res.render('register', {
+          errors,
+          name,
+          email,
+          password,
+          password2
+        });
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password
+        });
+
+        // Hash Password
+        bcrypt.genSalt(10, (err, salt) =>
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            // Set password to hash
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => {
+                req.flash(
+                  'success_msg',
+                  'You are now registered and can login'
+                );
+                // Send a welcome mail
+                transporter
+                  .sendMail({
+                    from: '"Irene & Co" <cohortdths@gmail.com>', // sender address
+                    to: 'pinn561577@gmail.com', // list of receivers
+                    subject: 'Contact form details ', // Subject line
+                    text: 'Hello world?', // plain text body
+                    html: `<b>Welcome Message</b>` // html body
+                  })
+                  .then(info => {
+                    console.log('Message sent: %s', info.messageId);
+                  })
+                  .catch(() => {
+                    console.log('something went wrong.');
+                  });
+                res.redirect('/users/login');
+              })
+              .catch(err => console.log(err));
+          })
+        );
+      }
+    });
+  }
+});
+
+// Login
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/users/login',
+    failureFlash: true
+  })(req, res, next);
+});
+
+// Logout
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.flash('success_msg', 'You are logged out');
+  res.redirect('/users/login');
+});
 
 module.exports = router;
