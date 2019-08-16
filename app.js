@@ -7,6 +7,9 @@ const session = require('express-session');
 
 const app = express();
 
+// Static files
+app.use(express.static(__dirname + '/public'));
+
 // Passport Config
 require('./config/passport')(passport);
 
@@ -54,6 +57,7 @@ app.use(express.urlencoded({ extended: false }));
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+app.use('/contact', require('./routes/contact'));
 
 const PORT = process.env.PORT || 4433;
 

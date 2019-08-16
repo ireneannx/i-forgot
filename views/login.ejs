@@ -1,16 +1,17 @@
 <style>
-  input {
-    background-color: #333333 !important;
-    color: #f4f4f4 !important;
+  ::placeholder {
+    color: #666 !important;
   }
-
   .card-body {
-    background: url(http://www.seekgif.com/uploads/2017/05/pure-black-background-wallpaper-997199-14.jpeg);
+    background-color: #000 !important;
   }
 </style>
 
-<body class="">
-  <div class="row mt-5">
+<body>
+  <nav class="navbar navbar-light bg-transparent">
+    <a class="navbar-brand" href="/"><i class="fas fa-arrow-left"></i> Home</a>
+  </nav>
+  <div class="row">
     <div class="col-md-6 m-auto">
       <div class="card card-body">
         <h1 class="text-center mb-3">
@@ -26,7 +27,7 @@
               type="email"
               id="email"
               name="email"
-              class="form-control"
+              class="form-control bg-dark text-white"
               placeholder="Enter Email"
             />
           </div>
@@ -36,7 +37,7 @@
               type="password"
               id="password"
               name="password"
-              class="form-control"
+              class="form-control bg-dark text-white"
               placeholder="Enter Password"
             />
           </div>

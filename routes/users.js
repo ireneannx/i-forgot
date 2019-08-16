@@ -90,11 +90,11 @@ router.post('/register', (req, res) => {
                 // Send a welcome mail
                 transporter
                   .sendMail({
-                    from: '"Irene & Co" <cohortdths@gmail.com>', // sender address
-                    to: 'pinn561577@gmail.com', // list of receivers
-                    subject: 'Contact form details ', // Subject line
-                    text: 'Hello world?', // plain text body
-                    html: `<b>Welcome Message</b>` // html body
+                    from: '"Irene & Co" <cohortdths@gmail.com>',  // sender address
+                    to: 'pinn561577@gmail.com',                   // list of receivers
+                    subject: 'Contact form details ',             // Subject line
+                    text: 'Hello world?',                         // plain text body
+                    html: `<b>Welcome Message</b>`                // html body
                   })
                   .then(info => {
                     console.log('Message sent: %s', info.messageId);
