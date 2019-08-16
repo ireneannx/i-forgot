@@ -1,13 +1,13 @@
 {
   "name": "password-tracker",
   "version": "1.0.0",
-  "description": "user authentication",
+  "description": "password manager",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
-  "author": "rushyab",
+  "author": "irene",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
