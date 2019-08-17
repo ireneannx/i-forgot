@@ -1,5 +1,87 @@
-<h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%= user.name %></p>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
-<!-- contact -->
-<a href="/users/contact" class="btn"> Contact </a>
+<body style="background-color: #000">
+  <nav class="navbar navbar-expand-md navbar-light bg-transparent">
+    <a class="navbar-brand display-4 border-bottom border-top rounded"
+      >Welcome <%= user.name %></a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link text-success border-bottom rounded text-center"
+            href="/contact"
+            >Contact</a
+          >
+        </li>
+        <li class="nav-item mx-2">
+          <a
+            class="nav-link text-success border-bottom rounded text-center"
+            href="/users/logout"
+            >Logout</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Save new passwords -->
+  <div class="container my-5 border border-white rounded">
+    <p class="lead">Save Credentials</p>
+    <form onsubmit="return false;" id="pass-form">
+      <div class="form-group">
+        <label for="website">Name of the website</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          class="form-control bg-dark text-white"
+          placeholder="Enter Website Name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control bg-dark text-white"
+          placeholder="Enter Email"
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="form-control bg-dark text-white"
+          placeholder="Enter Password"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block mb-2">Save</button>
+    </form>
+  </div>
+
+  <!-- Display passwords -->
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Website</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+      </tr>
+    </thead>
+    <tbody id="pass-list"></tbody>
+  </table>
+</body>
