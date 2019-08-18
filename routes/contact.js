@@ -27,11 +27,18 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   transporter
     .sendMail({
-      from: '"Irene Inc" <cohortdths@gmail.com>', // sender address
-      to: 'irenephantrash@gmail.com', // list of receivers
+      from: '"passLock Inc" <cohortdths@gmail.com>', // sender address
+      to: `${req.body.email}`, // list of receivers
       subject: 'Contact form details ', // Subject line
       text: 'Hello world?', // plain text body
-      html: `<b>${req.body.message}</b>` // html body
+    html: `
+    <p>Hi ${req.body.name}, <br> 
+    Thank you for reaching out to us. We have recieved your message and one of our representatives will be in contact with you shortly.</p>
+    <p> ---------------- </p>
+    <p> Name: ${req.body.name} </p>
+    <p> Subject: ${req.body.subject} </p>
+    <p> Message: ${req.body.message} </p>
+    ` // html body
     })
     .then(info => {
       console.log('Message sent: %s', info.messageId);
