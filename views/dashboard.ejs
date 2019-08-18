@@ -1,15 +1,19 @@
 <body style="background-color: #000">
   <nav class="navbar navbar-expand-md navbar-light bg-transparent">
-    <a class="navbar-brand display-4 border-bottom border-top rounded"
-      >Welcome <%= user.name %></a
-    >
+    <a
+      class="navbar-brand display-4 border-primary border-bottom border-top rounded"
+      ><% if (typeof name != 'undefined') { %>  Welcome <%= name %> <% } %>
+    </a>
+    <a class="btn btn-primary ml-auto" href="/users/logout">Logout</a>
   </nav>
 
   <!-- Shows validation errors -->
   <% include ./partials/messages %>
   <!-- Save new passwords -->
-  <div class="container my-5">
-    <p class="lead">Save Credentials</p>
+  <div class="container mb-5 mt-3">
+    <p class="lead border-bottom border-primary rounded d-inline-block">
+      Save Credentials
+    </p>
     <form id="pass-form" method="POST" action="/dashboard">
       <div class="form-group">
         <label for="website">Name of the website</label>
@@ -51,8 +55,10 @@
 
   <!-- Display passwords -->
   <div class="container my-5">
-    <p class="lead">Saved Accounts</p>
-    <table class="table table-bordered">
+    <p class="lead border-bottom border-primary rounded d-inline-block">
+      Saved Accounts
+    </p>
+    <table class="table">
       <thead class="thead-dark">
         <tr>
           <th scope="col">Website</th>
