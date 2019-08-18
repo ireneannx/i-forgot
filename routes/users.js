@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const nodemailer = require('nodemailer');
-const bcrypt = require('bcryptjs');
+
+const SimpleCrypto = require('simple-crypto-js').default;
+const _secretKey = require('../config/keys').encryptionKey;
+const simpleCrypto = new SimpleCrypto(_secretKey);
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -74,39 +77,31 @@ router.post('/register', (req, res) => {
           password
         });
 
-        // Hash Password
-        bcrypt.genSalt(10, (err, salt) =>
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            // Set password to hash
-            newUser.password = hash;
-            newUser
-              .save()
-              .then(user => {
-                req.flash(
-                  'success_msg',
-                  'You are now registered and can login'
-                );
-                // Send a welcome mail
-                transporter
-                  .sendMail({
-                    from: '"Irene & Co" <cohortdths@gmail.com>',  // sender address
-                    to: 'pinn561577@gmail.com',                   // list of receivers
-                    subject: 'Contact form details ',             // Subject line
-                    text: 'Hello world?',                         // plain text body
-                    html: `<b>Welcome Message</b>`                // html body
-                  })
-                  .then(info => {
-                    console.log('Message sent: %s', info.messageId);
-                  })
-                  .catch(() => {
-                    console.log('something went wrong.');
-                  });
-                res.redirect('/users/login');
+        // Encrypt Password
+        newUser.password = simpleCrypto.encrypt(newUser.password);
+
+        newUser
+          .save()
+          .then(user => {
+            req.flash('success_msg', 'You are now registered and can login');
+            // Send a welcome mail
+            transporter
+              .sendMail({
+                from: '"Irene & Co" <cohortdths@gmail.com>', // sender address
+                to: 'pinn561577@gmail.com', // list of receivers
+                subject: 'Contact form details ', // Subject line
+                text: 'Hello world?', // plain text body
+                html: `<b>Welcome Message</b>` // html body
               })
-              .catch(err => console.log(err));
+              .then(info => {
+                console.log('Message sent: %s', info.messageId);
+              })
+              .catch(() => {
+                console.log('something went wrong.');
+              });
+            res.redirect('/users/login');
           })
-        );
+          .catch(err => console.log(err));
       }
     });
   }

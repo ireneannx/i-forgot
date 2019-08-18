@@ -1,6 +1,9 @@
 const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+
+const SimpleCrypto = require('simple-crypto-js').default;
+const _secretKey = require('./keys').encryptionKey;
+const simpleCrypto = new SimpleCrypto(_secretKey);
 
 // Load User model
 const User = require('../models/User');
@@ -16,16 +19,13 @@ module.exports = function(passport) {
               message: 'This email is not registered'
             });
           }
-
+          
           // Match password
-          bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (err) throw err;
-            if (isMatch) {
-              return done(null, user);
-            } else {
-              return done(null, false, { message: 'Password incorrect' });
-            }
-          });
+          if (password == simpleCrypto.decrypt(user.password)) {
+            return done(null, user);
+          } else {
+            return done(null, false, { message: 'Password incorrect' });
+          }
         })
         .catch(err => console.log(err));
     })

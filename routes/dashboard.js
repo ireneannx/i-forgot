@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
 const { ensureAuthenticated } = require('../config/auth');
+
+const SimpleCrypto = require('simple-crypto-js').default;
+const _secretKey = require('../config/keys').encryptionKey;
+const simpleCrypto = new SimpleCrypto(_secretKey);
 
 // User model
 const User = require('../models/User');
@@ -11,7 +14,7 @@ router.get('/', ensureAuthenticated, async (req, res) => {
   global.user = req.user;
   const accounts = await showAccounts().then(data => data);
   res.render('dashboard', {
-    user: req.user,
+    name: req.user.name,
     accounts
   });
 });
@@ -19,7 +22,6 @@ router.get('/', ensureAuthenticated, async (req, res) => {
 router.post('/', (req, res) => {
   // Pull variables out
   const { website, email, password } = req.body;
-  console.log(website, email, password);
   let errors = [];
 
   // Check required fields
@@ -29,31 +31,29 @@ router.post('/', (req, res) => {
 
   if (errors.length > 0) {
     res.render('dashboard', {
-      errors
+      errors,
+      accounts: ``
     });
   } else {
-    // Hash Password
-    bcrypt.genSalt(10, (err, salt) =>
-      bcrypt.hash(password, salt, (err, hash) => {
-        if (err) throw err;
 
-        // Update Record
-        User.updateOne(
-          { email: user.email },
-          {
-            $push: {
-              account: [
-                [{ website: website }, { email: email }, { password: hash }]
-              ]
-            }
-          },
-          (err, collection) => {
-            if (err) throw err;
-            console.log('Record updated successfully');
-            console.log(collection);
-          }
-        );
-      })
+    // Encrypt Password
+    let encryptedPass = simpleCrypto.encrypt(password);
+    
+    // Update Record
+    User.updateOne(
+      { email: user.email },
+      {
+        $push: {
+          account: [
+            [{ website: website }, { email: email }, { password: encryptedPass }]
+          ]
+        }
+      },
+      (err, collection) => {
+        if (err) throw err;
+        console.log('Record updated successfully');
+        console.log(collection);
+      }
     );
     res.redirect('/dashboard');
   }
@@ -67,7 +67,7 @@ const showAccounts = async () => {
         output += `<tr>
                     <td>${account[0].website}</td>
                     <td>${account[1].email}</td>
-                    <td>${account[2].password}</td>
+                    <td>${simpleCrypto.decrypt(account[2].password)}</td>
                     </tr>`;
       });
     }
