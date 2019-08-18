@@ -20,14 +20,8 @@
       rel="stylesheet"
     />
 
-    <title>Pass Lock</title>
+    <title>passLock</title>
     <style>
-      .icontainer {
-        justify-content: center !important;
-        align-items: center !important;
-        margin-top: 150px !important;
-        /* how to make this responsive */
-      }
       body {
         background: url('img/staircase.jpg') no-repeat center center/cover;
       }
@@ -39,18 +33,20 @@
   </head>
 
   <body class="text-center">
-    <div class=" container d-flex h-100 p-3 mx-auto flex-column">
-      <main role="main" class="container icontainer">
+    <div class=" container h-75 d-flex flex-column align-items-center justify-content-center">
+      <main role="main" class="container">
         <!-- "cover-heading" -->
-        <h1 class="cover-heading">Password</h1>
+        <div class="container my-4">
+          <h1 class="cover-heading">Password</h1>
+          <p class="lead">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum, nemo!
+          </p>
+        </div>
         <p class="lead">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum, nemo!
-        </p>
-        <p class="lead">
-          <a href="/users/register" class="btn btn-lg btn-secondary"
+          <a href="/users/register" class="btn btn-lg btn-secondary border border-primary"
             >Register</a
           >
-          <a href="/users/login" class="btn btn-lg btn-secondary ml-2">Login</a>
+          <a href="/users/login" class="btn btn-lg btn-secondary ml-3 border border-primary">Login</a>
         </p>
       </main>
     </div>
