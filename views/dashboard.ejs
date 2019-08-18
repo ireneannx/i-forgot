@@ -34,10 +34,12 @@
     </div>
   </nav>
 
+  <!-- Shows validation errors -->
+  <% include ./partials/messages %>
   <!-- Save new passwords -->
-  <div class="container my-5 border border-white rounded">
+  <div class="container my-5">
     <p class="lead">Save Credentials</p>
-    <form onsubmit="return false;" id="pass-form">
+    <form id="pass-form" method="POST" action="/dashboard">
       <div class="form-group">
         <label for="website">Name of the website</label>
         <input
@@ -68,20 +70,28 @@
           placeholder="Enter Password"
         />
       </div>
-      <button type="submit" class="btn btn-primary btn-block mb-2">Save</button>
+      <input
+        type="submit"
+        class="btn btn-primary btn-block mb-2"
+        value="Save"
+      />
     </form>
   </div>
 
   <!-- Display passwords -->
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Website</th>
-        <th scope="col">Email</th>
-        <th scope="col">Password</th>
-      </tr>
-    </thead>
-    <tbody id="pass-list"></tbody>
-  </table>
+  <div class="container my-5">
+    <p class="lead">Saved Accounts</p>
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Website</th>
+          <th scope="col">Email</th>
+          <th scope="col">Password</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%- accounts %>
+      </tbody>
+    </table>
+  </div>
 </body>

@@ -13,6 +13,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  account: {
+    type: Array,
+  },
   date: {
     type: Date,
     default: Date.now
