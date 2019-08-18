@@ -35,12 +35,40 @@
         background-color: #333;
         color: #fff;
       }
+      .bg-dark{
+        background-color: rgb(0,0,0, 0.4) !important;
+      }
     </style>
   </head>
 
   <body class="text-center">
+    <!-- navbar begins -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">passLock</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarColor02">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/dashboard">Dashboard</a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/about">About</a>
+                </li> 
+          </ul>
+        </div>
+      </nav>
+    <!-- navbar ends -->
     <div class=" container d-flex h-100 p-3 mx-auto flex-column">
-      <header class="masthead iborder">
+      <!-- <header class="masthead iborder">
         <div class="inner">
           <h3 class="masthead-brand">passLock</h3>
           <nav class="nav nav-masthead justify-content-center">
@@ -49,7 +77,7 @@
             <a class="nav-link" href="/contact">Contact</a>
           </nav>
         </div>
-      </header>
+      </header> -->
 
       <main role="main" class="container icontainer">
         <!-- "cover-heading" -->
