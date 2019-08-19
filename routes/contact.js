@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
       text: 'Hello world?', // plain text body
     html: `
     <p>Hi ${req.body.name}, <br> 
-    Thank you for reaching out to us. We have recieved your message and one of our representatives will be in contact with you shortly.</p>
+    Thank you for reaching out to us. We have received your message and one of our representatives will be in contact with you shortly.</p>
     <p> ---------------- </p>
     <p> Name: ${req.body.name} </p>
     <p> Subject: ${req.body.subject} </p>
