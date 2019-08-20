@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
       console.log('something went wrong.');
     });
 
-  res.redirect('/contact/success');
+  res.redirect('/contact');
 });
 
 router.get('/success', (req, res) => {
