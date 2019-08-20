@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
-
 const app = express();
 
 // Static files
@@ -17,7 +16,7 @@ require('./config/passport')(passport);
 const db = require('./config/keys').mongoURI;
 
 // Connect to Mongo
-// 'mongodb://localhost:27017/test'
+// 'mongodb://localhost/my_database:27017'
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log('MongoDB Connected...'))
