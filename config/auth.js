@@ -13,12 +13,16 @@ module.exports = {
     }
     res.redirect('/dashboard');      
   },
-  // // for login
-  // enAuthenticated: function(req, res, next) {
-  //   if (req.isAuthenticated()) {
-  //     res.redirect('/dashboard');
-  //   }
+  // for login
+  enAuthenticated: function(req, res, next) {
+    console.log(req.isAuthenticated());
+
+    if (req.isAuthenticated()) {
+      res.redirect('/dashboard');
+    }else{
+      res.redirect('/users/login');
+    }
     
-  //   res.redirect('/users/login');
-  // }
+    
+  }
 };

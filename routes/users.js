@@ -26,7 +26,7 @@ const User = require('../models/User');
 router.get('/login', (req, res) => res.render('login'));
 
 //test
-// router.get('/logins', enAuthenticated, (req, res) => res.render('login'));
+router.get('/logins', enAuthenticated, (req, res) => {});
 
 // Register Page
 router.get('/register', (req, res) => res.render('register.ejs'));
