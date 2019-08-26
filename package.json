@@ -7,6 +7,9 @@
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
+  "engines": {
+    "node": "10.x"
+  },
   "author": "irene",
   "license": "ISC",
   "dependencies": {
