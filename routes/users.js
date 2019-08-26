@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const nodemailer = require('nodemailer');
+const { enAuthenticated } = require('../config/auth');
 
 const SimpleCrypto = require('simple-crypto-js').default;
 const _secretKey = require('../config/keys').encryptionKey;
@@ -23,6 +24,9 @@ const User = require('../models/User');
 
 // Login Page
 router.get('/login', (req, res) => res.render('login'));
+
+//test
+// router.get('/logins', enAuthenticated, (req, res) => res.render('login'));
 
 // Register Page
 router.get('/register', (req, res) => res.render('register.ejs'));

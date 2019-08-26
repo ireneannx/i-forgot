@@ -12,5 +12,13 @@ module.exports = {
       return next();
     }
     res.redirect('/dashboard');      
-  }
+  },
+  // // for login
+  // enAuthenticated: function(req, res, next) {
+  //   if (req.isAuthenticated()) {
+  //     res.redirect('/dashboard');
+  //   }
+    
+  //   res.redirect('/users/login');
+  // }
 };
