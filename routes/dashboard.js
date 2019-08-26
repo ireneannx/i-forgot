@@ -68,7 +68,7 @@ router.post('/', (req, res) => {
 //   console.log("hello")
 // })
 
-router.delete('/delete/', async(req, res) => {
+router.delete('/delete/', async (req, res) => {
   let accountId = req.body.accountId;
   let userId = req.body.userId;
   let updatedAccount;
@@ -83,7 +83,7 @@ router.delete('/delete/', async(req, res) => {
   });
   if (typeof updatedAccount != 'undefined') {
     User.updateOne(
-      { _id:  userId },
+      { _id: userId },
       {
         $set: { account: updatedAccount }
       },
@@ -102,16 +102,15 @@ const showAccounts = async () => {
       let user_id = local_user._id;
       local_user.account.forEach(account => {
         output += `<tr id=${user_id}>
-                    <td>${account[1].website}</td>
-                    <td>${account[2].email}</td>
-                    <td>${simpleCrypto.decrypt(account[3].password)}</td>
-                    <td class="delete" id=${
-                      account[0]._id
-                    }><a href="#"><i class="far fa-trash-alt"></i>
-
-                    </i>
-                    </a></td>
-                    </tr>`;
+        <td>${account[1].website}</td>
+        <td>${account[2].email}</td>
+        <td><a class="password px-3 rounded" style="color:#fff; cursor:pointer; background-color: #fff;">${simpleCrypto.decrypt(account[3].password)}</a></td>
+        <td id=${
+          account[0]._id
+          }><a href="#"><i class="delete far fa-trash-alt"></i>
+        </i>
+        </a></td>
+        </tr>`;
       });
     }
     return output;

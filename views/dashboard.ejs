@@ -75,16 +75,23 @@
 </body>
 <script>
   $(document).ready(function() {
-    $('.delete').click(function(e) {
+    $(".delete").click(function(e) {
       let accountId = e.target.parentElement.parentElement.id;
       let userId = e.target.parentElement.parentElement.parentElement.id;
       $.ajax({
-        method: 'DELETE',
-        url: '/dashboard/delete',
+        method: "DELETE",
+        url: "/dashboard/delete",
         data: { accountId, userId },
         success: data => data
       });
       e.target.parentElement.parentElement.parentElement.remove();
+    });
+  });
+  $(document).ready(function() {
+    $(".password").click(function(e) {
+      e.target.style.color = "#fff";
+      e.target.style.background = "none";
+      console.log("test1");
     });
   });
 </script>
