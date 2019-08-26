@@ -88,10 +88,10 @@ router.post('/register', (req, res) => {
             transporter
               .sendMail({
                 from: '"Irene & Co" <cohortdths@gmail.com>', // sender address
-                to: 'pinn561577@gmail.com', // list of receivers
-                subject: 'Contact form details ', // Subject line
+                to: req.body.email, // list of receivers
+                subject: 'Welcome to passLock', // Subject line
                 text: 'Hello world?', // plain text body
-                html: `<b>Welcome Message</b>` // html body
+                html: `<p>Hi ${req.body.name}, <br> Thank you for creating an account with passLock. Your passwords are safe with us. </p>` // html body
               })
               .then(info => {
                 console.log('Message sent: %s', info.messageId);
