@@ -22,7 +22,7 @@
     "node-mailer": "^0.1.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "simple-crypto-js": "^2.2.0"
+    "simple-crypto-js": "^2.3.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
